@@ -7,19 +7,19 @@ datasource db {
 }
 
 model User {
-  id              String   @id @default(uuid())
-  email           String   @unique
+  id              String    @id @default(uuid())
+  email           String    @unique
   password        String
   name            String
   gender          String?
-  birthDate       DateTime? 
+  birthDate       DateTime?
   weight          Float?
   height          Float?
-  medicalNotes    String?  @db.Text
-  bio             String?  @db.Text
+  medicalNotes    String?   @db.Text
+  bio             String?   @db.Text
   profileImageUrl String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   eventsHosted    ActivityEvent[]    @relation("EventHost")
   participations  EventParticipant[]
@@ -32,60 +32,61 @@ model ActivityEvent {
   id              String   @id @default(uuid())
   title           String
   description     String?  @db.Text
-  location        String
-  eventDate       DateTime @db.Date 
-  startTime       String   
-  endTime         String   
-  category        String   
+  locationName    String
+  locationUrl     String
+  eventDate       DateTime @db.Date
+  startTime       String
+  endTime         String
+  category        String
   maxParticipants Int
-  status          String   @default("OPEN") 
-  imgEvent        String?  
+  status          String   @default("OPEN")
+  imgEvent        String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
-  hostId          String
-  host            User     @relation("EventHost", fields: [hostId], references: [id], onDelete: Cascade)
+  hostId String
+  host   User   @relation("EventHost", fields: [hostId], references: [id], onDelete: Cascade)
 
-  participants    EventParticipant[]
-  comments        Comment[]
+  participants EventParticipant[]
+  comments     Comment[]
 
-  @@unique([hostId, eventDate]) 
+  @@unique([hostId, eventDate])
 }
 
 model EventParticipant {
-  id              String   @id @default(uuid())
-  status          String   @default("PENDING") // PENDING, ACCEPTED, REJECTED
-  joinedAt        DateTime @default(now())
+  id       String   @id @default(uuid())
+  status   String   @default("PENDING") // PENDING, ACCEPTED, REJECTED
+  joinedAt DateTime @default(now())
 
-  eventId         String
-  event           ActivityEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId String
+  event   ActivityEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
-  userId          String
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, eventId])
 }
 
 model Comment {
-  id              String   @id @default(uuid())
-  message         String   @db.Text
-  createdAt       DateTime @default(now())
+  id        String   @id @default(uuid())
+  message   String   @db.Text
+  createdAt DateTime @default(now())
 
-  userId          String
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  eventId         String
-  event           ActivityEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId String
+  event   ActivityEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
 }
 
 model Review {
-  id              String   @id @default(uuid())
-  rating          Int
-  createdAt       DateTime @default(now())
+  id        String   @id @default(uuid())
+  rating    Int
+  createdAt DateTime @default(now())
 
-  fromUserId      String   
-  fromUser        User     @relation("ReviewsGiven", fields: [fromUserId], references: [id], onDelete: Cascade)
+  fromUserId String
+  fromUser   User   @relation("ReviewsGiven", fields: [fromUserId], references: [id], onDelete: Cascade)
 
-  toUserId        String   
-  toUser          User     @relation("ReviewsReceived", fields: [toUserId], references: [id], onDelete: Cascade)
+  toUserId String
+  toUser   User   @relation("ReviewsReceived", fields: [toUserId], references: [id], onDelete: Cascade)
 }
