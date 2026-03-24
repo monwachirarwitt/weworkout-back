@@ -1,17 +1,14 @@
-// Import necessary modules
-import { registerUser } from "../services/auth.service.js";
+import { registerUser } from '../services/auth.service.js';
 
-/**
- * Controller to handle user registration
- * @param {import('express').Request} req - Express request object
- * @param {import('express').Response} res - Express response object
- */
 export async function register(req, res) {
   try {
     const userData = req.body;
     const createdUser = await registerUser(userData);
+    
+    // ส่งสถานะ 201 กลับไปเมื่อสร้างสำเร็จ
     res.status(201).json(createdUser);
   } catch (error) {
+    // กรณี Error เช่น อีเมลซ้ำ หรือ Database มีปัญหา
     res.status(500).json({ error: error.message });
   }
 }
