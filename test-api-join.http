@@ -1,0 +1,6 @@
+@BASE_URL = http://localhost:8000/api
+
+
+### ทดสอบส่งคำขอเข้าร่วมตี้ (Join Event)
+POST {{BASE_URL}}/event/737d8942-3706-4abd-8beb-755e22da813f/join
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA3MWQwYzc0LTRkOGMtNDI3YS1iOGVkLTBlZTEyYzgxOWZkNCIsImVtYWlsIjoidGVlMkBleGFtcGxlLmNvbSIsImlhdCI6MTc3NDM0NjU1NSwiZXhwIjoxNzc0OTUxMzU1fQ.AB7jf7LxAB4KFuqJurVvKkYIxjCXSlahJExfGfQS3lM
