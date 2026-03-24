@@ -4,7 +4,6 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  // ไม่ต้องใส่ url ตรงนี้ เพราะระบบจัดการผ่าน prisma.config.ts ให้แล้ว
 }
 
 model User {
