@@ -40,3 +40,32 @@ Content-Type: application/json
   "bio": "ชอบเตะบอล",
   "medicalNotes": "แพ้อาหารทะเล"
 }
+
+### ========================================
+### 🏆 PHASE 2: ระบบจัดการตี้กีฬา (EVENT)
+### ========================================
+
+### ทดสอบสร้างตี้กีฬา (Create Event)
+POST {{BASE_URL}}/event
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE1ZTZiY2EyLTM2NWYtNDQwZS1hN2I0LWNjYjE1OWIzZjI2YSIsImVtYWlsIjoibS5uYWphQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MzM3MjQ5LCJleHAiOjE3NzQ5NDIwNDl9.7nv7lTvHq0TmjSV-BB5jhHstTsWhauSh4wrDIEKG450
+Content-Type: application/json
+
+{
+  "title": "เตะบอลหญ้าเทียมขำๆ วันศุกร์",
+  "description": "หาคนหารค่าสนามครับ ขาดอีก 3 คน เล่นชิลๆ ไม่หัวร้อน",
+  "locationName": "สนามฟุตบอล Super Kick",
+  "locationUrl": "https://maps.app.goo.gl/testlink",
+  "eventDate": "2026-04-15T00:00:00Z",
+  "startTime": "18:00",
+  "endTime": "20:00",
+  "category": "Football",
+  "maxParticipants": 35
+}
+
+### ทดสอบดึงรายการตี้ทั้งหมด (หน้า Feed)
+GET {{BASE_URL}}/event
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE1ZTZiY2EyLTM2NWYtNDQwZS1hN2I0LWNjYjE1OWIzZjI2YSIsImVtYWlsIjoibS5uYWphQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MzM3MjQ5LCJleHAiOjE3NzQ5NDIwNDl9.7nv7lTvHq0TmjSV-BB5jhHstTsWhauSh4wrDIEKG450
+
+### ทดสอบดูรายละเอียดตี้แบบเจาะจง (แทนที่ 1234 ด้วย ID ของตี้จริงๆ)
+GET {{BASE_URL}}/event/1234
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE1ZTZiY2EyLTM2NWYtNDQwZS1hN2I0LWNjYjE1OWIzZjI2YSIsImVtYWlsIjoibS5uYWphQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MzM3MjQ5LCJleHAiOjE3NzQ5NDIwNDl9.7nv7lTvHq0TmjSV-BB5jhHstTsWhauSh4wrDIEKG450
