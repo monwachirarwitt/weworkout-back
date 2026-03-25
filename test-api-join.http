@@ -1,6 +1,32 @@
 @BASE_URL = http://localhost:8000/api
 
 
-### ทดสอบส่งคำขอเข้าร่วมตี้ (Join Event)
+### ทดสอบส่งคำขอเข้าร่วมตี้ (Join Event) ตี้ตีแบต  
 POST {{BASE_URL}}/event/737d8942-3706-4abd-8beb-755e22da813f/join
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA3MWQwYzc0LTRkOGMtNDI3YS1iOGVkLTBlZTEyYzgxOWZkNCIsImVtYWlsIjoidGVlMkBleGFtcGxlLmNvbSIsImlhdCI6MTc3NDM0NjU1NSwiZXhwIjoxNzc0OTUxMzU1fQ.AB7jf7LxAB4KFuqJurVvKkYIxjCXSlahJExfGfQS3lM
+
+
+
+### ทดสอบอนุมัติคนเข้าตี้ (Host กดยอมรับลูกตี้ชื่อ Tee2)
+PUT {{BASE_URL}}/event/737d8942-3706-4abd-8beb-755e22da813f/participants/071d0c74-4d8c-427a-b8ed-0ee12c819fd4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE1ZTZiY2EyLTM2NWYtNDQwZS1hN2I0LWNjYjE1OWIzZjI2YSIsImVtYWlsIjoibS5uYWphQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MzM3MjQ5LCJleHAiOjE3NzQ5NDIwNDl9.7nv7lTvHq0TmjSV-BB5jhHstTsWhauSh4wrDIEKG450
+Content-Type: application/json
+
+{
+  "status": "ACCEPTED"
+}
+
+
+### ทดสอบปฏิเสธคนเข้าตี้ (เผื่ออยากลองเตะ Tee2 ออก)
+PUT {{BASE_URL}}/event/737d8942-3706-4abd-8beb-755e22da813f/participants/071d0c74-4d8c-427a-b8ed-0ee12c819fd4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE1ZTZiY2EyLTM2NWYtNDQwZS1hN2I0LWNjYjE1OWIzZjI2YSIsImVtYWlsIjoibS5uYWphQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MzM3MjQ5LCJleHAiOjE3NzQ5NDIwNDl9.7nv7lTvHq0TmjSV-BB5jhHstTsWhauSh4wrDIEKG450
+Content-Type: application/json
+
+{
+  "status": "REJECTED"
+}
+
+
+### ทดสอบลูกตี้กดยกเลิก/ออกจากตี้ (Leave Event) - Tee2 กดออกตี้ตีแบด
+DELETE {{BASE_URL}}/event/737d8942-3706-4abd-8beb-755e22da813f/leave
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA3MWQwYzc0LTRkOGMtNDI3YS1iOGVkLTBlZTEyYzgxOWZkNCIsImVtYWlsIjoidGVlMkBleGFtcGxlLmNvbSIsImlhdCI6MTc3NDM0NjU1NSwiZXhwIjoxNzc0OTUxMzU1fQ.AB7jf7LxAB4KFuqJurVvKkYIxjCXSlahJExfGfQS3lM

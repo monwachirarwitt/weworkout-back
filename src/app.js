@@ -13,9 +13,9 @@ app.use(express.json());
 // เชื่อมต่อ Route เข้ากับ Path /api/auth
 app.use('/api/auth', authRoutes);
 
-app.use('/api/user', userRoutes); // <--- 2. เพิ่มบรรทัดนี้
+app.use('/api/user', userRoutes); 
 
-app.use('/api/event', eventRoutes); // <--- 2. เพิ่มบรรทัดนี้
+app.use('/api/event', eventRoutes); 
 
 app.get('/health', (req, res) => {
   res.json({ success: true });

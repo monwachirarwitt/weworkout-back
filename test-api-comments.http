@@ -1,0 +1,19 @@
+
+@BASE_URL = http://localhost:8000/api
+
+### ========================================
+### 💬 PHASE 3: ระบบคอมเมนต์ (COMMENTS)
+### ========================================
+
+### ทดสอบส่งคอมเมนต์เข้าตี้ตีแบด (ใช้ Token ใครก็ได้ที่อยากคุย)
+POST {{BASE_URL}}/event/737d8942-3706-4abd-8beb-755e22da813f/comments
+Authorization: Bearer ใส่_TOKEN_ตรงนี้
+Content-Type: application/json
+
+{
+  "message": "สนามมีที่จอดรถไหมครับพี่?"
+}
+
+### ทดสอบดึงคอมเมนต์ทั้งหมดของตี้นี้มาอ่าน
+GET {{BASE_URL}}/event/737d8942-3706-4abd-8beb-755e22da813f/comments
+Authorization: Bearer ใส่_TOKEN_ตรงนี้

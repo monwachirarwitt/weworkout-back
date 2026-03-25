@@ -18,3 +18,24 @@ export const createEventSchema = z.object({
     imgEvent: z.string().url("รูปแบบ URL รูปภาพไม่ถูกต้อง").optional(),
   }),
 });
+
+// ... โค้ด createEventSchema เดิมปล่อยไว้ ...
+
+// เพิ่มตัวตรวจจับสถานะ
+export const manageParticipantSchema = z.object({
+  body: z.object({
+    status: z.enum(["ACCEPTED", "REJECTED"], {
+      required_error: "กรุณาระบุสถานะ (ACCEPTED หรือ REJECTED)",
+      invalid_type_error: "สถานะต้องเป็น ACCEPTED หรือ REJECTED เท่านั้น"
+    })
+  })
+});
+
+// ... โค้ดเดิมทั้งหมดปล่อยไว้ ...
+
+// ตัวดักจับข้อมูลคอมเมนต์
+export const commentSchema = z.object({
+  body: z.object({
+    message: z.string({ required_error: "กรุณาพิมพ์ข้อความ" }).min(1, "ข้อความห้ามว่างเปล่า"),
+  })
+});
