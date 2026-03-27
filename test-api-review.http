@@ -1,0 +1,18 @@
+
+
+@BASE_URL = http://localhost:8000/api
+### ⭐ PHASE 4: ระบบรีวิวและเรตติ้ง (REVIEWS)
+
+
+### 1️⃣ ทดสอบให้ดาว (Mon กดให้คะแนน Tee2 จำนวน 5 ดาว)
+POST {{BASE_URL}}/review/071d0c74-4d8c-427a-b8ed-0ee12c819fd4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE1ZTZiY2EyLTM2NWYtNDQwZS1hN2I0LWNjYjE1OWIzZjI2YSIsImVtYWlsIjoibS5uYWphQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MzM3MjQ5LCJleHAiOjE3NzQ5NDIwNDl9.7nv7lTvHq0TmjSV-BB5jhHstTsWhauSh4wrDIEKG450
+Content-Type: application/json
+
+{
+  "rating": 5
+}
+
+### 2️⃣ ทดสอบดูเรตติ้ง (ดึงข้อมูลดาวของ Tee2 ออกมาดู)
+GET {{BASE_URL}}/review/071d0c74-4d8c-427a-b8ed-0ee12c819fd4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE1ZTZiY2EyLTM2NWYtNDQwZS1hN2I0LWNjYjE1OWIzZjI2YSIsImVtYWlsIjoibS5uYWphQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MzM3MjQ5LCJleHAiOjE3NzQ5NDIwNDl9.7nv7lTvHq0TmjSV-BB5jhHstTsWhauSh4wrDIEKG450

@@ -1,19 +1,29 @@
 
 @BASE_URL = http://localhost:8000/api
 
-### ========================================
 ### 💬 PHASE 3: ระบบคอมเมนต์ (COMMENTS)
-### ========================================
 
-### ทดสอบส่งคอมเมนต์เข้าตี้ตีแบด (ใช้ Token ใครก็ได้ที่อยากคุย)
+
+### 1️⃣ ทดสอบส่งคอมเมนต์ (Tee2 เป็นคนพิมพ์ถาม)
 POST {{BASE_URL}}/event/737d8942-3706-4abd-8beb-755e22da813f/comments
-Authorization: Bearer ใส่_TOKEN_ตรงนี้
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA3MWQwYzc0LTRkOGMtNDI3YS1iOGVkLTBlZTEyYzgxOWZkNCIsImVtYWlsIjoidGVlMkBleGFtcGxlLmNvbSIsImlhdCI6MTc3NDM0NjU1NSwiZXhwIjoxNzc0OTUxMzU1fQ.AB7jf7LxAB4KFuqJurVvKkYIxjCXSlahJExfGfQS3lM
 Content-Type: application/json
 
 {
   "message": "สนามมีที่จอดรถไหมครับพี่?"
 }
 
-### ทดสอบดึงคอมเมนต์ทั้งหมดของตี้นี้มาอ่าน
+
+### 2️⃣ ทดสอบส่งคอมเมนต์ (Mon เจ้าของตี้เป็นคนพิมพ์ตอบ)
+POST {{BASE_URL}}/event/737d8942-3706-4abd-8beb-755e22da813f/comments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE1ZTZiY2EyLTM2NWYtNDQwZS1hN2I0LWNjYjE1OWIzZjI2YSIsImVtYWlsIjoibS5uYWphQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MzM3MjQ5LCJleHAiOjE3NzQ5NDIwNDl9.7nv7lTvHq0TmjSV-BB5jhHstTsWhauSh4wrDIEKG450
+Content-Type: application/json
+
+{
+  "message": "มีเพียบเลยครับ ขับมาจอดหน้าคอร์ทได้เลย!"
+}
+
+
+### 3️⃣ ทดสอบดึงคอมเมนต์ทั้งหมดของตี้นี้มาอ่าน (ใช้ Token ใครดึงก็ได้)
 GET {{BASE_URL}}/event/737d8942-3706-4abd-8beb-755e22da813f/comments
-Authorization: Bearer ใส่_TOKEN_ตรงนี้
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE1ZTZiY2EyLTM2NWYtNDQwZS1hN2I0LWNjYjE1OWIzZjI2YSIsImVtYWlsIjoibS5uYWphQGV4YW1wbGUuY29tIiwiaWF0IjoxNzc0MzM3MjQ5LCJleHAiOjE3NzQ5NDIwNDl9.7nv7lTvHq0TmjSV-BB5jhHstTsWhauSh4wrDIEKG450

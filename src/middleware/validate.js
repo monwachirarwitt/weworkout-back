@@ -1,20 +1,19 @@
+// src/middleware/validate.js
 export const validate = (schema) => (req, res, next) => {
   try {
-    // ให้ Zod ตรวจสอบข้อมูลที่เข้ามา
     schema.parse({
       body: req.body,
       query: req.query,
       params: req.params,
     });
-    next(); // ถ้าผ่านด่าน ให้ไปทำงานโค้ดส่วนต่อไปได้เลย
+    next();
   } catch (error) {
-    // ถ้าไม่ผ่าน ให้ดึงข้อความ Error ที่เราตั้งไว้ใน Schema ส่งกลับไป
-    return res.status(400).json({
-      message: "ข้อมูลไม่ถูกต้อง",
-      errors: error.errors.map((e) => ({
-        field: e.path.join('.'),
-        message: e.message
-      }))
-    });
+    // แก้ตรงนี้ครับ: เช็กว่า error เป็นของ Zod ไหม จะได้จับโยนข้อความออกไปสวยๆ
+    if (error.errors) {
+      const errorMessage = error.errors.map(e => e.message).join(', ');
+      return res.status(400).json({ error: errorMessage });
+    }
+    // ถ้าพังอย่างอื่น
+    return res.status(400).json({ error: "ข้อมูลไม่ถูกต้อง" });
   }
 };
