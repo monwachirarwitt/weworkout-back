@@ -6,6 +6,7 @@ export const updateProfileSchema = z.object({
     height: z.number().positive("ส่วนสูงต้องมากกว่า 0").optional(),
     medicalNotes: z.string().optional(),
     bio: z.string().optional(),
+    // 💥 แจ้งชื่อกับยาม Zod ให้รู้จักรูปโปรไฟล์แล้ว!
     profileImageUrl: z.string().url("รูปแบบ URL รูปภาพไม่ถูกต้อง").optional(),
     birthDate: z.string().datetime({ message: "รูปแบบวันที่ไม่ถูกต้อง" }).optional(),
   }),
