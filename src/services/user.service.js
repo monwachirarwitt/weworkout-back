@@ -26,14 +26,17 @@ export const getUserProfile = async (userId) => {
 };
 
 // 2. ฟังก์ชันอัปเดตข้อมูลโปรไฟล์ (ตัวที่ Error เมื่อกี้)
-export const updateUserProfile = async (userId, updateData) => {
-  console.log(updateData);
+// src/services/user.service.js
 
+export const updateUserProfile = async (userId, updateData) => {
+  console.log("Data from frontend:", updateData);
 
   const updatedUser = await prisma.user.update({
     where: { id: userId },
     data: {
-      profileImageUrl: updateData.profileImage
+      // ปรับให้รับค่า profileImageUrl จากหน้าบ้าน 
+      // หรือถ้าหน้าบ้านส่งชื่ออื่นมา ต้อง map ให้ตรงกับ prisma schema
+      profileImageUrl: updateData.profileImageUrl || updateData.profileImage 
     },
   });
 
