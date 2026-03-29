@@ -36,26 +36,30 @@ export const loginUser = async (userData) => {
     where: { email },
   });
 
-  // ถ้าไม่เจออีเมลนี้ ให้โยน Error
   if (!user) {
     throw new Error('อีเมลหรือรหัสผ่านไม่ถูกต้อง'); 
   }
 
-  // 2. ตรวจสอบรหัสผ่านว่าตรงกับที่เข้ารหัสไว้ไหม
+  // 2. ตรวจสอบรหัสผ่าน
   const isPasswordValid = await bcrypt.compare(password, user.password);
   
   if (!isPasswordValid) {
     throw new Error('อีเมลหรือรหัสผ่านไม่ถูกต้อง');
   }
 
-  // 3. สร้าง JWT Token (บัตรผ่านสำหรับใช้ในแอป)
+  // 💥 ขั้นตอนที่ 2: แก้ไขการสร้าง JWT Token ให้แพ็กข้อมูล "รูป" และ "ชื่อ" ลงไปด้วย
   const token = jwt.sign(
-    { id: user.id, email: user.email }, // ข้อมูลที่จะฝังใน Token
-    process.env.JWT_SECRET,             // กุญแจลับ (ต้องตั้งในไฟล์ .env)
-    { expiresIn: '7d' }                 // กำหนดอายุ Token 7 วัน
+    { 
+      id: user.id, 
+      email: user.email,
+      name: user.name, // 👈 เพิ่มชื่อ
+      profileImageUrl: user.profileImageUrl // 👈 เพิ่ม URL รูปภาพจาก MySQL ลงไปในบัตร!
+    }, 
+    process.env.JWT_SECRET,             
+    { expiresIn: '7d' }                 
   );
 
-  // 4. คืนค่าข้อมูล User (ตัดรหัสผ่านทิ้ง) พร้อมกับ Token
+  // 4. คืนค่าข้อมูล User พร้อมกับ Token
   const { password: _, ...userWithoutPassword } = user;
   return { 
     user: userWithoutPassword, 
