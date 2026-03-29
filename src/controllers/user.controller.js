@@ -1,17 +1,26 @@
-import { updateUserProfile } from '../services/user.service.js';
-
-export async function updateProfile(req, res) {
+// 💥 สร้าง Controller สำหรับอัปเดตข้อมูลโปรไฟล์ (รวมถึงรูปภาพด้วย)
+export const updateProfile = async (req, res) => {
   try {
-    const userId = req.user.id; // รปภ. (authenticate) แนบ ID มาให้แล้ว
-    const updateData = req.body; // ข้อมูลใหม่ที่ส่งมาจากหน้าบ้าน
+    // 1. ดึง ID ของคนที่ล็อกอินอยู่ (ได้มาจาก middleware authenticate)
+    const userId = req.user.id; 
+    
+    // 2. ดึงข้อมูลที่หน้าบ้านส่งมา (เช่น { profileImageUrl: "https://..." })
+    const updateData = req.body; 
 
-    const updatedProfile = await updateUserProfile(userId, updateData);
-
-    res.status(200).json({
-      message: "อัปเดตข้อมูลโปรไฟล์สำเร็จ",
-      user: updatedProfile
+    // 3. สั่ง Prisma ให้อัปเดตข้อมูลลง Database
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: updateData,
     });
+
+    // 4. ส่งคำตอบกลับไปบอกหน้าบ้านว่า "เซฟสำเร็จแล้วนะ!"
+    res.status(200).json({
+      message: "อัปเดตโปรไฟล์สำเร็จ",
+      user: updatedUser
+    });
+
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("❌ Update Profile Error:", error);
+    res.status(500).json({ error: "เกิดข้อผิดพลาดในการอัปเดตข้อมูล" });
   }
-}
+};
