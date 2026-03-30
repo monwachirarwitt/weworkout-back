@@ -11,7 +11,7 @@ import { updateProfileSchema } from '../validations/user.schema.js';
 const router = express.Router();
 
 // ประตูเดิมที่มีอยู่แล้ว
-router.get('/profile', authenticate,);
+router.get('/profile', authenticate);
 router.get('/events', authenticate);
 
 // 💥 3. สร้างประตูบานใหม่! รับข้อมูลแบบ PUT และให้ยาม Zod ตรวจก่อนเข้า
