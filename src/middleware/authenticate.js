@@ -1,20 +1,21 @@
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'; 
 
 export const authenticate = (req, res, next) => {
   try {
     // 1. รับ Token จาก Header (รูปแบบต้องเป็น: Bearer eyJhbGci...)
     const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {        
       return res.status(401).json({ message: "กรุณาเข้าสู่ระบบ (ไม่มี Token หรือรูปแบบผิด)" });
     }
 
-    // 2. ตัดคำว่า Bearer ออก เอาแค่ตัว Token ยึกยือๆ มา
+// 2. แกะบัตร: ตัดคำว่า "Bearer " ออกเพื่อเอาแต่ตัว Token จริงๆ
     const token = authHeader.split(' ')[1];
 
-    // 3. ถอดรหัสและตรวจสอบ Token ด้วยกุญแจลับของเรา
+// 3. ตรวจตราประทับ: ใช้ JWT_SECRET ของเราพิสูจน์ว่าเป็นของจริงไหม
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // 4. ฝังข้อมูล user (เช่น id, email) ลงไปใน Request เพื่อให้โค้ดส่วนต่อไปรู้ว่าใครกำลังใช้งานอยู่
+// 4. ระบุตัวตน: ฝังข้อมูล User (id, email) ไว้ในตัวแปร req.user
+    // เพื่อให้ Controller ที่อยู่ด่านต่อไปหยิบไปใช้ง่ายๆ
     req.user = decoded;
     
     next(); // บัตรผ่านของจริง เชิญผ่านด่านได้!
@@ -22,3 +23,5 @@ export const authenticate = (req, res, next) => {
     return res.status(401).json({ message: "Token ไม่ถูกต้องหรือหมดอายุ" });
   }
 };
+
+

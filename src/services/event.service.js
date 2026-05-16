@@ -99,7 +99,6 @@ export const joinEvent = async (eventId, userId) => {
   return participation;
 };
 
-// ... โค้ด 4 ฟังก์ชันเดิมปล่อยไว้ ...
 
 // 5. ฟังก์ชันสำหรับจัดการคนขอจอยตี้ (Host กดรับ/ปฏิเสธ)
 export const manageParticipant = async (eventId, hostId, participantUserId, status) => {
@@ -148,7 +147,6 @@ export const leaveEvent = async (eventId, userId) => {
   return { message: "ยกเลิกการเข้าร่วมตี้สำเร็จ" };
 };
 
-// ... โค้ดฟังก์ชันเดิมทั้งหมดปล่อยไว้ ...
 
 // 7. ฟังก์ชันสำหรับส่งคอมเมนต์
 export const addComment = async (eventId, userId, message) => {
@@ -182,4 +180,33 @@ export const getCommentsByEvent = async (eventId) => {
   });
 
   return comments;
+};
+
+// 9  export ฟังก์ชันลบ
+export const deleteEvent = async (eventId, hostId) => {
+
+
+  // หน้าที่: ก่อนจะลบ เราต้อง "หยิบของขึ้นมาดู" ก่อนครับ 
+  // เราสั่งให้ Prisma ไปค้นหาตี้ที่มี ID ตรงกับที่ส่งมาจาก URL
+  // เพื่อเอาข้อมูลเจ้าของตี้ (hostId) มาเตรียมไว้ใช้เช็กใน Step 3 ครับ
+  const event = await prisma.activityEvent.findUnique({
+    where: { id: eventId }
+  });
+
+  // 2. ถ้าไม่เจอข้อมูล (อาจจะถูกลบไปแล้ว)
+  if (!event) throw new Error('ไม่พบข้อมูลตี้นี้');
+
+  // 3. จุดสำคัญ: เช็กว่าคนสั่งลบ คือเจ้าของตี้ (Host) จริงๆ ไหม
+  // ป้องกันคนอื่นที่รู้ ID ตี้แอบมายิง API ลบตี้เราเล่นครับ
+  if (event.hostId !== hostId) {
+    throw new Error('คุณไม่ใช่เจ้าของตี้นี้ ไม่มีสิทธิ์ลบครับ!');
+  }
+
+  // 4. สั่งลบจาก Database ได้เลย
+  // Prisma จะลบ Participants และ Comments ให้เองเพราะเราตั้ง Cascade ไว้ใน Schema
+  await prisma.activityEvent.delete({
+    where: { id: eventId }
+  });
+
+  return { message: "ลบตี้สำเร็จแล้ว" };
 };

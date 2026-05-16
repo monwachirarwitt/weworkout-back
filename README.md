@@ -16,6 +16,11 @@
 
 ---
 
+## รายการหน้าเว็บเพจ (Frontend Routes)
+* `/` - หน้าแรก (Home)
+* `/create` - หน้าสร้างกิจกรรมกีฬา (จะทำการเรียกใช้ API: `POST /api/event`)
+* `/activities` - หน้าดูกิจกรรมทั้งหมด
+
 ### 📑 รายการ API (Endpoints) - Master Plan
 
 #### 1. ระบบจัดการโปรไฟล์และเข้าสู่ระบบ (Auth & Profile)

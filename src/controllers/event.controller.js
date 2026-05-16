@@ -1,5 +1,5 @@
 
-import { createEvent, getAllEvents, getEventById, joinEvent, manageParticipant, leaveEvent, addComment, getCommentsByEvent } from '../services/event.service.js';
+import { createEvent, getAllEvents, getEventById, joinEvent, manageParticipant, leaveEvent, addComment, getCommentsByEvent, deleteEvent } from '../services/event.service.js';
 
 // 1. ฟังก์ชันสร้างตี้ใหม่ (Create Event)
 export async function createNewEvent(req, res) {
@@ -123,5 +123,20 @@ export async function getEventComments(req, res) {
     res.status(200).json(comments);
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+}
+
+// 9. เพิ่มฟังก์ชันนี้ลงไปในไฟล์ครับ
+export async function deleteActivity(req, res) {
+  try {
+    const { id } = req.params; // รับ ID ตี้มาจาก URL เช่น /event/123-abc
+    const hostId = req.user.id; // รับ ID ของเราจาก Token (รปภ. authenticate เช็กให้แล้ว)
+
+    const result = await deleteEvent(id, hostId);
+    
+    res.status(200).json(result);
+  } catch (error) {
+    // ถ้าไม่ใช่เจ้าของตี้ หรือเกิดข้อผิดพลาด จะเด้งมาที่นี่
+    res.status(403).json({ error: error.message });
   }
 }
