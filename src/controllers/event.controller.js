@@ -108,6 +108,13 @@ export async function createComment(req, res) {
     const { message } = req.body;
 
     const comment = await addComment(id, userId, message);
+    
+    // แจ้งเตือนทุกคนในห้องนี้ผ่าน Socket.IO ว่ามีคอมเมนต์ใหม่
+    const io = req.app.get('io');
+    if (io) {
+      io.to(id).emit('new_comment', comment);
+    }
+
     res.status(201).json({ message: "คอมเมนต์สำเร็จ", data: comment });
   } catch (error) {
     res.status(400).json({ error: error.message });
