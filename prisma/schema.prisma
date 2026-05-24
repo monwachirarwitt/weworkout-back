@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
 }
 
 model User {
@@ -15,8 +15,8 @@ model User {
   birthDate       DateTime?
   weight          Float?
   height          Float?
-  medicalNotes    String?   @db.Text
-  bio             String?   @db.Text
+  medicalNotes    String?
+  bio             String?
   profileImageUrl String?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -31,7 +31,7 @@ model User {
 model ActivityEvent {
   id              String   @id @default(uuid())
   title           String
-  description     String?  @db.Text
+  description     String?
   locationName    String
   locationUrl     String
   eventDate       DateTime @db.Date
@@ -69,7 +69,7 @@ model EventParticipant {
 
 model Comment {
   id        String   @id @default(uuid())
-  message   String   @db.Text
+  message   String
   createdAt DateTime @default(now())
 
   userId String
