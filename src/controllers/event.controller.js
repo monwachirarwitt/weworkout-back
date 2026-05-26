@@ -7,6 +7,17 @@ export async function createNewEvent(req, res) {
     const hostId = req.user.id; 
     const eventData = req.body;
 
+    // ตรวจสอบเวลาเริ่มกิจกรรมต้องมาก่อนเวลาสิ้นสุด
+    if (eventData.startTime >= eventData.endTime) {
+      return res.status(400).json({ error: "เวลาเริ่มกิจกรรมต้องมาก่อนเวลาสิ้นสุด" });
+    }
+
+    // แปลงวันที่ให้ปลอดภัยสำหรับ Prisma (@db.Date) โดยตัด T00:00:00.000Z ออก
+    if (eventData.eventDate) {
+      const dateOnly = eventData.eventDate.split('T')[0];
+      eventData.eventDate = new Date(dateOnly);
+    }
+
     const event = await createEvent(hostId, eventData);
 
     res.status(201).json({
@@ -14,7 +25,7 @@ export async function createNewEvent(req, res) {
       event: event
     });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 }
 

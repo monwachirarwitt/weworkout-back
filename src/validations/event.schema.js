@@ -17,7 +17,10 @@ export const createEventSchema = z.object({
     
     category: z.string({ required_error: "กรุณาระบุชนิดกีฬา" }),
     // ให้ Zod เช็กว่าเป็นตัวเลขจริงๆ
-    maxParticipants: z.number({ required_error: "กรุณาระบุจำนวนคนที่รับ" }).min(2, "ต้องรับอย่างน้อย 2 คนครับ")
+    maxParticipants: z.number({ required_error: "กรุณาระบุจำนวนคนที่รับ" }).min(2, "ต้องรับอย่างน้อย 2 คนครับ"),
+    
+    // รับค่ารูปภาพจาก Frontend (อาจจะมีหรือไม่มีก็ได้)
+    imgEvent: z.string().nullable().optional()
   })
 });
 

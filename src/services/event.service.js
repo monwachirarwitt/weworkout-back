@@ -126,7 +126,6 @@ export const manageParticipant = async (eventId, hostId, participantUserId, stat
   return updatedParticipant;
 };
 
-// ... โค้ดเดิมทั้งหมดปล่อยไว้ ...
 
 // 6. ฟังก์ชันสำหรับลูกตี้กดออกจากตี้ หรือยกเลิกคำขอ
 export const leaveEvent = async (eventId, userId) => {
